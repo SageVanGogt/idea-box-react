@@ -6,7 +6,7 @@ const IdeaForm = (props) => {
     <div className="idea-form">
       <form action="" onSubmit={(event) => {
         event.preventDefault()
-        props.updateCurrIdea(
+        props.addToIdeaList(
           document.querySelector('.user-input-title').value, 
           document.querySelector('.user-input-body').value
         )

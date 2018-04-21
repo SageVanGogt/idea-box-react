@@ -10,10 +10,26 @@ class App extends Component {
       ideasArray: []
     }
 
-    this.updateCurrIdea = this.updateCurrIdea.bind(this)
+    this.addToIdeaList = this.addToIdeaList.bind(this)
   }
 
-  updateCurrIdea(title, body) {
+  componentDidMount() {
+    const localIdeas = [];
+
+    for (let i = 0; i < localStorage.length; i++) { 
+      let getIdeas = localStorage.getItem(localStorage.key(i)); 
+      let parsedIdea = JSON.parse(getIdeas);
+      localIdeas.push(parsedIdea);
+    }
+
+    if(localIdeas) {
+      this.setState({
+        ideasArray: localIdeas
+      });
+    }
+  }
+
+  addToIdeaList(title, body) {
     const cardId = Date.now();
     const newIdea = {cardId, title, body};
     const updatedIdeasArray = [...this.state.ideasArray, newIdea];
@@ -21,13 +37,19 @@ class App extends Component {
     this.setState({
       ideasArray: updatedIdeasArray
     })
+
+    this.sendToLocalStorage(newIdea)
+  }
+
+  sendToLocalStorage(ideaObj) {
+    localStorage.setItem(ideaObj.cardId, JSON.stringify(ideaObj));
   }
 
   render() {
     return (
       <div className="App">
         <IdeaForm 
-          updateCurrIdea={this.updateCurrIdea}
+          addToIdeaList={this.addToIdeaList}
         />
         <IdeaList 
           ideasArray={this.state.ideasArray}
