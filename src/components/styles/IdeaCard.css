@@ -1,0 +1,10 @@
+.idea-card {
+  width: 90%;
+  height: 20%;
+  background-color: white;
+  margin-top: 40px;
+}
+
+.idea-quality {
+  line-height: 0;
+}
