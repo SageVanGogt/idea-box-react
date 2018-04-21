@@ -1,13 +1,21 @@
 import React from 'react';
 import './styles/IdeaForm.css';
 
-const IdeaForm = () => {
+const IdeaForm = (props) => {
   return ( 
-    <form action="">
-      <input type="text" placeholder="name" />
-      <input type="text" name="" id="" placeholder="idea" />
-      <input type="submit"/>
-    </form>
+    <div className="idea-form">
+      <form action="" onSubmit={(event) => {
+        event.preventDefault()
+        props.updateCurrIdea(
+          document.querySelector('.user-input-title').value, 
+          document.querySelector('.user-input-body').value
+        )
+      }}>
+        <input type="text" className="user-input-title" placeholder="title" />
+        <input type="text" className="user-input-body" placeholder="idea" />
+        <input type="submit"/>
+      </form>
+    </div>
   )
 }
 
