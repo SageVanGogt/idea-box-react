@@ -12,9 +12,15 @@ class App extends Component {
 
     this.addToIdeaList = this.addToIdeaList.bind(this);
     this.editCardText = this.editCardText.bind(this);
+    this.fetchLocalIdeas = this.fetchLocalIdeas.bind(this);
+    this.removeIdea = this.removeIdea.bind(this);
   }
 
   componentDidMount() {
+    this.fetchLocalIdeas();
+  }
+
+  fetchLocalIdeas() {
     const localIdeas = [];
 
     for (let i = 0; i < localStorage.length; i++) { 
@@ -24,10 +30,14 @@ class App extends Component {
     }
 
     if(localIdeas) {
-      this.setState({
-        ideasArray: localIdeas
-      });
+      this.handleStateChange(localIdeas);
     }
+  }
+
+  handleStateChange(ideasArray) {
+    this.setState({
+      ideasArray
+    });
   }
 
   addToIdeaList(title, body) {
@@ -35,11 +45,17 @@ class App extends Component {
     const newIdea = {cardId, title, body};
     const updatedIdeasArray = [...this.state.ideasArray, newIdea];
 
-    this.setState({
-      ideasArray: updatedIdeasArray
-    })
-
+    this.handleStateChange(updatedIdeasArray);
     this.sendToLocalStorage(newIdea);
+  }
+
+  removeIdea(cardIdToDelete) {
+    const updatedIdeasArray = this.state.ideasArray.filter(ideaCard => {
+      return ideaCard.cardId !== cardIdToDelete;
+    });
+
+    this.handleStateChange(updatedIdeasArray);
+    localStorage.removeItem(cardIdToDelete);
   }
 
   sendToLocalStorage(ideaObj) {
@@ -53,11 +69,10 @@ class App extends Component {
   }
 
   editCardText(event, id, location) {
-    const {textContent, className} = event.target;
+    const {textContent} = event.target;
     const currIdeaCard = this.getFromLocalStorage(id);
 
     currIdeaCard[location] = textContent;
-    
     this.sendToLocalStorage(currIdeaCard);
   }
 
@@ -70,6 +85,7 @@ class App extends Component {
         <IdeaList 
           ideasArray={this.state.ideasArray}
           editCardText={this.editCardText}
+          removeIdea={this.removeIdea}
         />
       </div>
     );

@@ -8,6 +8,7 @@ const IdeaList = (props) => {
       <IdeaCard 
         idea={idea}
         editCardText={props.editCardText}
+        removeIdea={props.removeIdea}
       />
     )
   })
