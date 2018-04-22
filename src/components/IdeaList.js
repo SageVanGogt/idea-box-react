@@ -2,11 +2,12 @@ import React from 'react';
 import IdeaCard from './IdeaCard';
 import './styles/IdeaList.css';
 
-const IdeaList = ({ideasArray}) => {
-  const ideasToCards = ideasArray.map(idea => {
+const IdeaList = (props) => {
+  const ideasToCards = props.ideasArray.map(idea => {
     return (
       <IdeaCard 
-        props={idea}
+        idea={idea}
+        editCardText={props.editCardText}
       />
     )
   })
