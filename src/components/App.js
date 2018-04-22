@@ -10,7 +10,8 @@ class App extends Component {
       ideasArray: []
     }
 
-    this.addToIdeaList = this.addToIdeaList.bind(this)
+    this.addToIdeaList = this.addToIdeaList.bind(this);
+    this.editCardText = this.editCardText.bind(this);
   }
 
   componentDidMount() {
@@ -38,11 +39,26 @@ class App extends Component {
       ideasArray: updatedIdeasArray
     })
 
-    this.sendToLocalStorage(newIdea)
+    this.sendToLocalStorage(newIdea);
   }
 
   sendToLocalStorage(ideaObj) {
     localStorage.setItem(ideaObj.cardId, JSON.stringify(ideaObj));
+  }
+
+  getFromLocalStorage(id) {
+    const localIdeaCard = localStorage.getItem(id);
+    const parsedIdeaCard = JSON.parse(localIdeaCard);
+    return parsedIdeaCard;
+  }
+
+  editCardText(event, id, location) {
+    const {textContent, className} = event.target;
+    const currIdeaCard = this.getFromLocalStorage(id);
+
+    currIdeaCard[location] = textContent;
+    
+    this.sendToLocalStorage(currIdeaCard);
   }
 
   render() {
@@ -53,6 +69,7 @@ class App extends Component {
         />
         <IdeaList 
           ideasArray={this.state.ideasArray}
+          editCardText={this.editCardText}
         />
       </div>
     );
