@@ -2,7 +2,7 @@ import React from 'react';
 import './styles/IdeaCard.css';
 
 const IdeaCard = (props) => {
-  const {idea, editCardText, removeIdea} = props;
+  const {idea, editCardText, removeIdea, handleQualityChange} = props;
 
   return(
     <div className="idea-card" id={idea.cardId}>
@@ -12,7 +12,9 @@ const IdeaCard = (props) => {
       <div className="idea-quality">
         <img src="" alt=""/>
         <img src="" alt=""/>
-        <h4 className="idea-quality">Quality: {}</h4>
+        <button className="down-btn" onClick={() => handleQualityChange(idea.cardId, 'down')}>downvote</button>
+        <button className="up-btn" onClick={() => handleQualityChange(idea.cardId, 'up')}>upvote</button>
+        <h4 className="idea-quality">Quality: {idea.quality}</h4>
       </div>
     </div>
   );

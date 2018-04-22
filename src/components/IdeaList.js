@@ -9,6 +9,7 @@ const IdeaList = (props) => {
         idea={idea}
         editCardText={props.editCardText}
         removeIdea={props.removeIdea}
+        handleQualityChange={props.handleQualityChange}
       />
     )
   })

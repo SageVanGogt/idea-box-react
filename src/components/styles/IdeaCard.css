@@ -6,5 +6,6 @@
 }
 
 .idea-quality {
+  display: flex;
   line-height: 0;
 }
